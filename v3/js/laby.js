@@ -59,7 +59,7 @@ function print_maze(a) {
 	console.log("csz : " + csz + ", wsz : " + wsz);
     var i, j;
 	document.write("<div id='maze'");
-	//document.write(" style='width:" + (wsz + (csz + wsz) * a[0].length) + ";height:" + (wsz + (csz + wsz) * a.length) + ";'");
+	document.write(" style='width:" + (wsz + (csz + wsz) * a[0].length) + ";height:" + (wsz + (csz + wsz) * a.length) + ";'");
 	document.write(" style='width:" + (csz * a[0].length) + ";height:" + (csz * a.length) + ";'");
 	document.write(" class='maze'>");
 	for (i = 0; i < a.length; i++) {

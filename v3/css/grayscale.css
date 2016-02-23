@@ -371,3 +371,56 @@ img::-moz-selection {
 body {
     webkit-tap-highlight-color: rgba(255,255,255,.2);
 }
+
+/* CSS du labyrinthe */
+div.maze {
+    position: relative;
+    top: 50px;
+    left: 150px;
+    margin: 10px;
+    width: 150px;
+    height: 150px;
+    border: dotted;
+    border-color: white;
+    border-collapse:collapse;
+    border-width: thick;
+}
+
+#board {
+    position: fixed;
+    top:20px;
+}
+
+#user {
+    position: absolute;    
+    background:blue;
+    border-radius:50%;
+}
+
+div.cell_intersect {
+    position: absolute;
+    background:white;
+    border-radius:50%;
+    /*border: 5px solid;*/
+    width:10px;
+    height:10px;
+}
+
+div.cell {
+    position: absolute;
+    background: white;
+    /*text-align: center;*/
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    /*margin: 3em;*/
+    border-collapse:collapse;
+    /*border: 0.25px dotted;*/
+}
+
+div.N { border-top: 5px solid;}
+div.E { border-right: 5px solid;}
+div.S { border-bottom: 5px solid;}
+div.W { border-left: 5px solid;}
+
+
