@@ -182,7 +182,7 @@ function modifyStyleSheet() {
 }
 
 function new_game() {
-	laby = new_2d_array(50, 50);
+	laby = new_2d_array(10, 10);
 	init_2d_array(laby, 15);
 	dig(laby, 0, 0);
 	dig_ES(laby);
