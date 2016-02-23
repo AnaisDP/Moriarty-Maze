@@ -1,0 +1,70 @@
+body {
+    /*background-color: #cc99ff;*/
+    /*background-image: url("garden-maze.jpg");*/
+}
+
+/* Texte */
+h1, h2, h3, h4, h5, h6, p, footer {
+	font-family: verdana;
+	/*font-size: 150%;*/
+}
+
+nav {
+    position: fixed;
+    top: 0;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+}
+
+
+div.maze {
+    position: relative;
+    top: 50px;
+    left: 150px;
+    /*margin: 10px;*/
+    width: 300px;
+    height: 300px;
+    border: dotted;
+    border-color: brown;
+    border-collapse:collapse;
+    border-width: thin;
+}
+
+#board {
+    position: fixed;
+    top:20px;
+}
+
+#user {
+    position: absolute;    
+    background:blue;
+    border-radius:50%;
+}
+
+div.cell_intersect {
+    position: absolute;
+    background:black;
+    border-radius:50%;
+    /*border: 5px solid;*/
+    width:10px;
+    height:10px;
+}
+
+div.cell {
+    position: absolute;
+    /*text-align: center;*/
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    /*margin: 3em;*/
+    border-collapse:collapse;
+    /*border: 0.25px dotted;*/
+}
+
+div.N { border-top: 5px solid; }
+div.E { border-right: 5px solid; }
+div.S { border-bottom: 5px solid; }
+div.W { border-left: 5px solid; }
