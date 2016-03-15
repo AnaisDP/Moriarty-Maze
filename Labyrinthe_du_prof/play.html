@@ -1,30 +1,85 @@
-
+<!--
+	(c) Platypus SAS 2015-2016
+	Release version - v2
+	Author - Jules & Franck Lepoivre
+	Release date - 2016/03/04 - TP 2 ESILV 2A ACS - Labyrinthes
+	
+	
+	1) Intégrer le code fourni à l’IHM maquettée
+		­ D’abord générer le code HTML du labyrinthe  : adapter la fonction print_maze pour qu’elle produise votre code HTML / CSS de maquette. 
+		­ Ajouter une fonction de callback pour que le bouton nouvelle partie, dans la nav_bar déplace l’utilisateur vers la page PLAY et déclenche la génération d’un nouveau labyrinthe. 
+		==> Suivant les contraintes du modèle MVC, on scinde le code de génération du labyrinthe (dans laby_model.js) et celui de l'affichage et de l'interaction utilisateur (laby.js).
+-->
 <html>
 <head>
 	<meta charset="utf-8"/>
-	<title>PLAY</title>
+	<title>PLAY aMAZin</title>
 	<link rel="stylesheet" type="text/css" href="style/laby.css">
-	<script type="text/javascript" src="script/laby.js" > </script>
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
-<body onkeypress="uniCharCode(event)" onkeydown="uniKeyCode(event)">
+<body onkeydown="uniKeyCode(event)">
 	<nav>
-		<a href="home.html">HOME</a> |
-		<a href="play.html">Nouvelle partie</a> |
-		<a href="play.html">Partie en cours</a> |
+		<a  href="home.html">Home</a> 
+		<a class="cur" href="play.html">New game</a> 
 		<a href="scores.html">Scores</a>
 	</nav>
-	<div>
-		<aside>
-			<div id="board" style="align:left;">
-				<p>Time | Player 1 | Score</p>
-				<p>Time | Player 2 | Score</p>
+	<div class="content">
+		<!--  gestion du chrono et des scores -->
+		<div style="visibility:hidden;" id="aside">
+			<aside>
+				<div id="board" style="align:left;">
+					<p>
+						<span id="name1">Player 1</span> | 
+						<span id="timer1">Time</span> | 
+						<span id="score1">Score</span>
+					</p>
+					<!--p>Time | Player 2 | Score</p-->
+				</div>
+			</aside>
+		</div>
+		<div id="maze">
+			<div id="player_name">
+				<h1>Enter player name :</h1>
+				<input type="text" id="p_name" value="Player 1">
+				<button id="name" type="button" class="btn btn-info" data-toggle="modal" data-target="#modal_init">OK</button>
 			</div>
-		</aside>
-		<!--<div id="maze"></div>-->
-		<script>new_game();</script>
+		</div>	
 	</div>
 	<footer>
-	  <p>&copy; Moriarty</p>
-	  <p>blabla	 </a>.</p>
+	  <img src="img/logo.png">
+	  <p>&copy; Platypus S.A.S. 2015-16</p>
+	  <p>Contact information: <a href="mailto:franck.lepoivre@platypus.academy">franck.lepoivre@platypus.academy</a>.</p>
 	</footer>
+		<!--­ En bonus: Ajouter la possibilité de préciser, à travers une fenêtre modale, les dimensions du labyrinthe, en proposant d’une part des dimensions par défaut (ex: 20 x 20) , et en contraignant d’autre part (saisie sécurisée) ces dimensions à un maximum que vous fixerez.  
+		­ Astuce: intégrer Bootstrap pour utiliser leur fenêtre modale : https://www.bootstrapcdn.com/ pour les inclusions nécessaires, http://www.w3schools.com/bootstrap/bootstrap_modal.asp pour la modale
+		-->
+		<div id="modal_init" class="modal fade" role="dialog">
+		  <div class="modal-dialog">
+			<div class="modal-content">
+			  <div class="modal-header">
+				<a type="button" class="close" href="home.html" data-dismiss="modal">&times;</a>
+				<h4 class="modal-title">New game</h4>
+			  </div>
+			  <div class="modal-body">
+				<form>
+				<label>Input dimensions of the labyrinth :</label>
+				<input id="x" class="xs" value="15" type="number"/> x <input id="y" class="xs" value="15" type="number"/>
+				</form>
+			  </div>
+			  <div class="modal-footer">
+				<button id="launch" type="button" class="btn btn-info" data-dismiss="modal">Launch</button>
+			  </div>
+			</div>
+		  </div>
+		</div>
+		<script type="text/javascript" src="script/laby_model.js"></script>
+		<script type="text/javascript" src="script/laby.js"></script>
+		<script>
+			//on relie le bouton de lancement à la fonction de démarrage du jeu
+			$(function(){ 
+				$("#launch").on('click', main);
+			})
+		</script>
 </body>
