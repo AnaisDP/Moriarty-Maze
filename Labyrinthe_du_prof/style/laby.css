@@ -6,7 +6,7 @@ body {
 }
 .content{
 	background-color: #ddd;
-	position: fixed;
+	position: scroll;
 	top: 100px;
 	width: 100%;
 	text-align: center;
@@ -19,7 +19,7 @@ h1, h2, h3, h4, h5, h6, p, nav, footer, table {
 }
 
 nav {
-    position: fixed;
+    position: scroll;
     top: 0;
 	height: 100px;
 	width: 100%;

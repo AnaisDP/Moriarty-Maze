@@ -77,8 +77,8 @@ function new_game(x,y,rep) {
 	user_pos[0] = entry_pos[0];
 	user_pos[1] = entry_pos[1];
 	print_maze(laby);	
-}
 
+}
 // Initialisation du labyrinthe
 function main(){
 	// Récupération des variables saisies par l'utilisateur
@@ -102,6 +102,7 @@ function replay(){
 */
 function uniKeyCode(event) {
 	var key = event.keyCode;
+	setTimeout(function(){ lose(); }, 3000);
 	// - On peut se déplacer avec les touches directionnelles du clavier en respectant la règle de ne pas pouvoir franchir un mur.
     // N : 38, E : 39, S : 40, W : 37
 	// Si l'utilisateur utilise les touches de déplacement tandis que le jeu n'est pas en cours, on ne fait rien
@@ -153,8 +154,8 @@ function show_modal(id,title){
 			  '<div class="modal-body">'+
 			  '</div>'+
 			  '<div class="modal-footer">'+
-				'<button type="button" id="same" class="btn btn-info" data-dismiss="modal">Play again</button>'+
-				'<button type="button" id="next" class="btn btn-info" data-dismiss="modal">New game</button>'+
+				'<button type="button" class="btn btn-info" href="play.html" data-dismiss="modal">Play again</button>'+
+				
 			  '</div>'+
 			'</div>'+
 		  '</div>'+
@@ -172,4 +173,8 @@ function show_modal(id,title){
 function win(){
 	game_over = true;
 	show_modal('modal_win','You won !');
+}
+function lose(){
+	setTimeout(function(){ ("Hello"); }, 3000);
+	show_modal('modal_win','You Lose')
 }
