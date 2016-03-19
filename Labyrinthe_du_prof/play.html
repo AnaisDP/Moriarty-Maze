@@ -18,8 +18,32 @@
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 	<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
 	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	
+	<!-- essai décompte -->
+	<script language="javascript" type="text/javascript">
+		var compte = 60;
+		function decompte()
+		{
+        if(compte <= 1) {
+        pluriel = "";
+        } else {
+        pluriel = "s";
+        }
+ 
+   		document.getElementById("compt").innerHTML = compte + " seconde" + pluriel;
+ 
+        if(compte == 0 || compte < 0) {
+        compte = 0;
+ 
+        clearInterval(timer);
+        }
+ 
+    	compte--;
+		}
+		var timer = setInterval('decompte()',1000);
+	</script>
 </head>
-<body onkeydown="uniKeyCode(event)">
+<body onkeydown="uniKeyCode(event)" onload="décompte();">
 	<nav>
 		<a  href="home.html">Moriarty</a> 
 		<a class="cur" href="play.html">FUN</a> 
@@ -34,6 +58,7 @@
 						<span id="name1">Player 1</span> | 
 						<span id="timer1">Time</span> | 
 						<span id="score1">Score</span>
+						<span id="compt"></span>
 					</p>
 					<!--p>Time | Player 2 | Score</p-->
 				</div>

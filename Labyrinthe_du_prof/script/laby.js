@@ -79,7 +79,8 @@ function new_game(x,y,rep) {
 	user_pos[1] = entry_pos[1];
 	print_maze(laby);	
 	//timer de 3s , qui ouvre une fenêtre "lose"
-setTimeout(function(){ lose(); },3000);
+	
+	setTimeout(function(){ lose(); },3000);
 
 }
 // Initialisation du labyrinthe
