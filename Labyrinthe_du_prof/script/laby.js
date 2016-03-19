@@ -19,6 +19,7 @@ var game_over = true;	//variable de gestion de la fin du jeu
 
 // Affichage du labyrinthe et de ses murs, et du joueur
 function print_maze(a) {
+	
 	//console.log("csz : " + csz + ", wsz : " + wsz);
     var i, j;
 	var maze = document.querySelector('#maze');
@@ -80,7 +81,7 @@ function new_game(x,y,rep) {
 	print_maze(laby);	
 	//timer de 3s , qui ouvre une fenêtre "lose"
 	
-	setTimeout(function(){ lose(); },3000);
+	setTimeout(function(){ lose(); },60000);
 
 }
 // Initialisation du labyrinthe
@@ -143,6 +144,7 @@ function uniKeyCode(event) {
     }
 	// Vérifier les conditions de victoire
 	if ((user_pos[0] == exit_pos[0])&&(user_pos[1] == exit_pos[1])) win();
+
 }
 
 // Fonction générique d'affichage d'une modale pour la fin de la partie.
