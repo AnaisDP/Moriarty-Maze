@@ -89,10 +89,10 @@ div.maze {
     left: 150px;
     width: 300px;
     height: 300px;
-    /*border: dotted;
+    border: dotted;
     border-color: brown;
     border-collapse:collapse;
-    border-width: thin;*/
+    border-width: thin;
 }
 
 #board {
