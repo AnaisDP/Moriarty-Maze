@@ -1,243 +1,175 @@
-//"use strict";
-// Modèle de données : chaque cellule est entourée de 0, 1, 2, 3 ou 4 murs.
-// On code la présence de chaque mur par un chiffre binaire distinct :
-// 1 pour le mur N, 10 (2) pour le mur E, 100 (4) pour le mur S, 1000 (8) pour le mur W.
-// La valeur de chaque cellule est codée par simple somme de ces valeurs selon les murs présents ou pas.
+/*
+	(c) Platypus SAS 2015-2016
+	Release version - v2
+	Author - Jules & Franck Lepoivre
+	Release date - 2016/03/04 - TP 2 ESILV 2A ACS - Labyrinthes
+*/
 
 
-// retourne un tableau de n lignes par m colonnes
-function new_2d_array(n, m) {
-	if (n === 0 || m === 0) return;
-	var a = new Array(n);
-	for (var i = 0; i < a.length; i++) a[i] = new Array(m);
-	return a;
-}
+/* Déclaration des variables globales (accessibles partout dans le JS) */
+var laby;				// le labyrinthe
+var csz = 50;			// côté d'une cellule
+var wsz = 5;			// épaisseur d'un mur
+var psz = 0.5;			// épaisseur d'une porte
+var entry_pos = [];		// entrée du labyrinthe
+var exit_pos = [];		// sortie du labyrinthe
+var user_pos = [];		// position du joueur
+var game_over = true;	//variable de gestion de la fin du jeu
 
-// initialise le tableau a en affectant à toutes ses cellules la valeur v
-function init_2d_array(a, v) {
-    var i, j;
-	for (i = 0; i < a.length; i++)
-		for (j = 0; j < a[i].length; j++)
-			a[i][j] = v;
-}
-
-// initialise le tableau a en affectant à toutes ses cellules la valeur v
-function random_init_maze(a) {
-    var i, j;
-	for (i = 0; i < a.length; i++)
-		for (j = 0; j < a[i].length; j++)
-			a[i][j] = Math.floor(Math.random() * 16);
-}
-
-
-// affiche un tableau 2D
-function print_2d_array(a) {
-	for (var i = 0; i < a.length; i++) {
-		for (var j = 0; j < a[i].length; j++) {
-			document.write(a[i][j] + " ");
-		}
-		document.write("<br/>");
-	}
-}
-
-
-// fournir un corrigé de ce qui était demandé au TP 1
-function has_N_wall(v) { return (v & 1) == 1; } // retourne vrai ssi le mur N existe
-function has_E_wall(v) { return (v & 2) == 2; }
-function has_S_wall(v) { return (v & 4) == 4; }
-function has_W_wall(v) { return (v & 8) == 8; }
-
-function css_cell_code(v) {
-	return (has_N_wall(v) ? "N " : "")
-	     + (has_E_wall(v) ? "E " : "")
-	     + (has_S_wall(v) ? "S " : "")
-	     + (has_W_wall(v) ? "W " : "");
-}
-
-
+// Affichage du labyrinthe et de ses murs, et du joueur
 function print_maze(a) {
-	console.log("csz : " + csz + ", wsz : " + wsz);
+	//console.log("csz : " + csz + ", wsz : " + wsz);
     var i, j;
-	document.write("<div id='maze'");
-	document.write(" style='width:" + (wsz + (csz + wsz) * a[0].length) + ";height:" + (wsz + (csz + wsz) * a.length) + ";'");
-	document.write(" style='width:" + (csz * a[0].length) + ";height:" + (csz * a.length) + ";'");
-	document.write(" class='maze'>");
+	var maze = document.querySelector('#maze');
+	
+	// Vider la div maze
+	while (maze.hasChildNodes()) {
+		maze.removeChild(maze.lastChild);
+	};
+	
+	// Appliquer au labyrinthe des styles selon les paramètres entrés par l'utilisateur
+	maze.setAttribute('style', 'width:' + (csz * a[0].length) + 'px; height:' + (csz * a.length) + 'px;');
+	maze.setAttribute('class','maze');
 	for (i = 0; i < a.length; i++) {
 		for (j = 0; j < a[i].length; j++) {
-			document.write("<div id='" + i + "_" + j + "'");
-			document.write(" class='cell " + css_cell_code(a[i][j]) + "'");
-			document.write(" style='top:" + (csz * i) + "; left:" + (csz * j) + ";");
-			document.write(" width:" + csz + "px; height:" + csz + "px;' ");
-			document.write("></div>");
+			var div = document.createElement('div');
+			div.setAttribute('id',i + "_" + j);
+			div.setAttribute('class','cell ' + css_cell_code(a[i][j]) );
+			div.setAttribute('style', ' top:'+ (csz * i) + '; left:' + (csz * j) + '; width:'+csz+'px; height:'+csz+'px;');
+			maze.appendChild(div);
 		}
 	}
+	
+	/*
+	// Dessiner les intersections
 	for (i = 1; i < a.length; i++) {
 		for (j = 1; j < a[i].length; j++) {
-			document.write("<div id='_" + i + "_" + j + "'");
-			document.write(" class='cell_intersect'");
-			document.write(" style='top:" + (csz * i - wsz) + "; left:" + (csz * j - wsz) + ";'");
-			document.write("></div>");
+			var div = document.createElement('div');
+			div.setAttribute('id','_' + i + "_" + j);
+			div.setAttribute('class','cell_intersect');
+			div.setAttribute('style','top:'+ (csz * i - wsz) + "; left:" + (csz * j - wsz) + ";");
+			maze.appendChild(div);
 		}
 	}
-	document.write("<div id='user' style='top:" + (csz * user_pos[0]) + "; left:" + (csz * user_pos[1]) + ";");
-	document.write(" width:" + csz + "px; height:" + csz + "px;'></div>");
-	document.write("</div>");
-	// premier pas en DOM : marquage de l'entrée et de la sortie :
-	/*for (i = 0; i < a.length; i++)
-		for (j = 0; j < a[i].length; j++)
-			document.getElementById(i + "_" + j).style.backgroundColor =
-                "rgb(" + 16 * a[i][j] + ", " + 16 * a[i][j] + ", " + 16 * a[i][j] + ")";*/
-	for (i = 0; i < a.length && has_W_wall(a[i][0]); i++);
-	document.getElementById(i + "_0").style.backgroundColor = "#99ff33";
+	*/
+	
+	// En début de partie, le joueur est matérialisé sur la cellule d’entrée du labyrinthe :
+	var user = document.createElement('div');
+	user.setAttribute('id','user');
+	user.setAttribute('style',"top:" + (csz * user_pos[0]) + "; left:" + (csz * user_pos[1]) + "; width:" + csz + "px; height:" + csz + "px;");
+	maze.appendChild(user);
+	
+	// Marquage de la sortie :
 	for (i = 0; i < a.length && has_E_wall(a[i][a[0].length - 1]); i++);
 	document.getElementById(i + "_" + (a[0].length - 1)).style.backgroundColor = "#ff6666";
-
+	exit_pos = [i,a[0].length - 1];
 }
 
-// creusement de galeries
-// toutes les cellules sont fermées (4 murs => valeur 15)
-// on démarre par exemple par la cellule NW et on tire alétoirement l'une des 4 directions possibles
-// en prenant soin d'éliminer celles qui mènes soit en dehors du tableau, soit vers une position déjà visitée
-// on marque la position de départ comme visitée.
-// on se déplace alors vers la position suivante, en faisant sauter une 'cloison'
-// on recommence : tirage d'une direction parmi celles qui n'ont pas été déjà visitées.
-// etc.. déjà fait - retrouver.
-// si toutes les possibilités sont fermées, on revient en arrière (backtracking) jusqu'à la dernière position
-// d'où pertaient plusieurs choix
-// => A concevoir sur papier + réaliser et teste
-// finalement : on se donne un point d'entrée et un point de sortie en désignant deux côtés
-//
-
-
-// une cellule a été explorée ssi elle n'a plus ses 4 murs (i.e. son code diffère de 15)
-// donne la liste des cellules adjacentes à la cellule i, j qui n'ont pas encore été visitées
-function explorable(laby, i, j) {
-	var a = []; // création d'un tableau vide
-	var k = 0;
-	if (i > 0)                  if (laby[i - 1][j] == 15) a[k++] = 1;
-	if (j < laby[0].length - 1) if (laby[i][j + 1] == 15) a[k++] = 2;
-	if (i < laby.length - 1)    if (laby[i + 1][j] == 15) a[k++] = 4;
-	if (j > 0)                  if (laby[i][j - 1] == 15) a[k++] = 8;
-	return a;
-}
-
-// la seule raison de rendre cet algorithme récursif itératif (utiliser une pile) est d'échapper à la taille maximale de la pile d'appels (call stack)
-// mais cette raison est motivée par la version mutijoueurs avec labyrinthe immense avec vues subjectives (1ère personne) pour les différents utilisateurs
-// tirage aléatoire d'une direction parmi les 1, 2, 3 ou 4 fournies
-function dig(laby, i, j) {
-	//console.log("dig(" + i + ", " + j + ")");
-	var a = explorable(laby, i, j); // on récupère celles des 4 cellules adjacentes qui n'ont pas encore été explorées
-	// s'il n'en existe aucune, on ne poursuit pas et on retourne 0 (aucun mur na été creusé)
-	if (a.length == 0) return 0;
-	// s'il en existe au moins une, on effectue un tirage aléatoire pour choisir l'une d'entre elles
-	var dir = Math.floor(Math.random() * a.length);
-	// on fait tomber la cloison qui sépare la cellule courante de la cellule adjacente choisie
-	laby[i][j] -= a[dir];
-	// et on relance récursivement l'algorithme sur la cellule adjacente sélectionnée
-	switch (a[dir]) {
-		case 1 : laby[i - 1][j] -= 4; dig(laby, i - 1, j); break;
-		case 2 : laby[i][j + 1] -= 8; dig(laby, i, j + 1); break;
-		case 4 : laby[i + 1][j] -= 1; dig(laby, i + 1, j); break;
-		case 8 : laby[i][j - 1] -= 2; dig(laby, i, j - 1); break;
+// Lancement d'une partie
+function new_game(x,y,rep) {
+	if (rep){
+		laby = new_2d_array(x, y);
+		init_2d_array(laby, 15);
+		dig(laby, 0, 0);
+		dig_ES(laby);
 	}
-	// l'algorithme se relance sur la cellule courante (backtracking) au cas où il lui resterait des voisines à explorer
-	dig(laby, i, j);
-}
-
-// creuse une entrée et une sortie
-function dig_ES(laby) {
-	entry_pos[0] = Math.floor(Math.random() * laby.length);
-	entry_pos[1] = 0;
-	//laby[entry_pos[0]][entry_pos[1]] -= 8; // réactiver ouvrirait l'entrée et permettrait à l'utilisateur de naviguer en dehors de l'enceinte du labyrinthe
-
-	exit_pos[0] = Math.floor(Math.random() * laby.length);
-	exit_pos[1] = laby[0].length - 1;
-	laby[exit_pos[0]][exit_pos[1]] -= 2;
-
+	//modifyStyleSheet();
 	user_pos[0] = entry_pos[0];
 	user_pos[1] = entry_pos[1];
+	print_maze(laby);	
 }
 
-var laby;
-var csz = 50;		// côté d'une cellule
-var wsz = 5;		// épaisseur d'un mur
-var psz = 0.5;		// épaisseur d'une porte
-var entry_pos = [];
-var exit_pos = [];
-var user_pos = [];
-
-
-function modifyStyleSheet() {
-	var ss = document.styleSheets[0];
-	console.log('nb css : ' + document.styleSheets.length);
-	console.log('css href : ' + document.styleSheets[0].href);
-	console.log('css title : ' + document.styleSheets[0].title);
-	console.log('css type : ' + document.styleSheets[0].type);
-	console.log('css rules : ' + document.styleSheets[0].rules);
-	if (!ss) console.log('Pas de ss');
-	else console.log('nb rules : ' + ss + ' of size ' + ss.cssRules.length);
-	var i = 0;
-	while (ss.rules[i].selectorText != "div.N") i++;
-	ss.cssRules[i].style.borderTop = "10px solid";
+// Initialisation du labyrinthe
+function main(){
+	// Récupération des variables saisies par l'utilisateur
+	var x = parseInt(document.querySelector('#x').value);
+	var y = parseInt(document.querySelector('#y').value);
+	// Enlever le footer pour avoir une zone de jeu plus grande :
+	document.querySelector('footer').style.visibility='hidden';
+	// Lancement du jeu
+	new_game(x,y,game_over);	
+	game_over = false;
 }
 
-function new_game() {
-	laby = new_2d_array(10, 10);
-	init_2d_array(laby, 15);
-	dig(laby, 0, 0);
-	dig_ES(laby);
-	//modifyStyleSheet();
-	print_maze(laby);
+// Ajout de la possibilité de rejouer la partie en cours (reset), qui repositionne le joueur sur la position d'entrée du même laby et réinitialise le compte à rebours
+function replay(){
+	game_over = false;
+	main();
 }
 
-function uniCharCode(event) {
-    var char = event.which || event.keyCode;
-    document.getElementById("board").innerHTML = "The Unicode CHARACTER code is: " + char;
-}
-
+/*
+ > Insérer le gameplay initial ­ La possibilité de se déplacer
+*/
 function uniKeyCode(event) {
-    var key = event.keyCode;
-    //document.getElementById("board").innerHTML = "The Unicode KEY code is: " + key;
+	var key = event.keyCode;
+	// - On peut se déplacer avec les touches directionnelles du clavier en respectant la règle de ne pas pouvoir franchir un mur.
     // N : 38, E : 39, S : 40, W : 37
+	// Si l'utilisateur utilise les touches de déplacement tandis que le jeu n'est pas en cours, on ne fait rien
+	if(!document.getElementById("user")) return;
+	// Lorsque l’utilisateur parvient à la sortie, cela déclenche la fin de partie et l’affichage d’un message qui le manifeste. Le jeu est alors bloqué et il n’est plus possible de se déplacer dans le labyrinthe.
+	if (game_over) return;
     var user_style = document.getElementById("user").style;
     switch (key) {
-    	case 37 :
-    		console.log('W case : ' + user_style.left);
+    	case 37 : // W
     		if (!has_W_wall(laby[user_pos[0]][user_pos[1]])) {
     			user_pos[1]--;
     			user_style.left = (csz * user_pos[1]) + "px";
     		}
-    		else console.log('(' + user_pos[0] + ', ' + user_pos[1] + ') Déplacement impossible : mur W !');
     		break;
-    	case 39 :
-    		console.log('E case : ' + user_style.left);
-    		if (!has_E_wall(laby[user_pos[0]][user_pos[1]])) {
-    			user_pos[1]++;
-    			user_style.left = (csz * user_pos[1]) + "px";
-    		}
-    		else console.log('(' + user_pos[0] + ', ' + user_pos[1] + ') Déplacement impossible : mur E !');
-    		break;
-    	case 38 :
-    		console.log('N case : ' + user_style.top);
+		case 38 : // N
     		if (!has_N_wall(laby[user_pos[0]][user_pos[1]])) {
     			user_pos[0]--;
     			user_style.top = (csz * user_pos[0]) + "px";
     		}
-    		else console.log('(' + user_pos[0] + ', ' + user_pos[1] + ') Déplacement impossible : mur N !');
     		break;
-    	case 40 :
-    		console.log('S case : ' + user_style.top);
+    	case 39 : // E
+    		if (!has_E_wall(laby[user_pos[0]][user_pos[1]])) {
+    			user_pos[1]++;
+    			user_style.left = (csz * user_pos[1]) + "px";
+    		}
+    		break;
+    	case 40 : // S
     		if (!has_S_wall(laby[user_pos[0]][user_pos[1]])) {
     			user_pos[0]++;
     			user_style.top = (csz * user_pos[0]) + "px";
     		}
-    		else console.log('(' + user_pos[0] + ', ' + user_pos[1] + ') Déplacement impossible : mur S !');
     		break;
     }
+	// Vérifier les conditions de victoire
+	if ((user_pos[0] == exit_pos[0])&&(user_pos[1] == exit_pos[1])) win();
 }
 
+// Fonction générique d'affichage d'une modale pour la fin de la partie.
+function show_modal(id,title){
+	// stockage du code HTML de la modale à afficher dans une variable :
+	var flow =
+		'<div id="'+id+'" class="modal fade" role="dialog">'+
+		  '<div class="modal-dialog">'+
+			'<div class="modal-content">'+
+			  '<div class="modal-header">'+
+				'<a type="button" class="close" href="play.html" data-dismiss="modal">&times;</a>'+
+				'<h4 class="modal-title">'+title+'</h4>'+
+			  '</div>'+
+			  '<div class="modal-body">'+
+			  '</div>'+
+			  '<div class="modal-footer">'+
+				'<button type="button" id="same" class="btn btn-info" data-dismiss="modal">Play again</button>'+
+				'<button type="button" id="next" class="btn btn-info" data-dismiss="modal">New game</button>'+
+			  '</div>'+
+			'</div>'+
+		  '</div>'+
+		'</div>';
+	// ensuite, insertion de la modale dans le flux HTML :
+	document.querySelector('body').innerHTML+=flow;
+	// affichage de la modale :
+	$('#'+id).modal();
+	// cablage des évenements pour redémarrer la partie ou en démarrer une nouvelle :
+	$('#next').on('click',main);
+	$('#same').on('click',replay);
+}
 
-
-
-
-
+// Gestion de la victoire
+function win(){
+	game_over = true;
+	show_modal('modal_win','You won !');
+}

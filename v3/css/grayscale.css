@@ -373,17 +373,38 @@ body {
 }
 
 /* CSS du labyrinthe */
+
+.scores{
+    width:960px;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+aside{
+    color: #a2b43a;
+    padding-left: 10px;
+}
+
+.modal-header, h4, .close {
+      background-color: #a2b43a;
+      color:red !important;
+      text-align: center;
+      font-size: 30px;
+}
+.xs{
+    width: 40px;
+}
+
 div.maze {
     position: relative;
-    top: 100px;
+    top: 50px;
     left: 150px;
-    margin: 10px;
-    width: 150px;
-    height: 150px;
-    border: dotted;
-    border-color: white;
+    width: 300px;
+    height: 300px;
+    /*border: dotted;
+    border-color: brown;
     border-collapse:collapse;
-    border-width: thick;
+    border-width: thin;*/
 }
 
 #board {
@@ -399,28 +420,21 @@ div.maze {
 
 div.cell_intersect {
     position: absolute;
-    background:white;
-    border-radius:50%;
-    /*border: 5px solid;*/
+    background:black;
+    border-radius:50%;    
     width:10px;
     height:10px;
 }
 
 div.cell {
     position: absolute;
-    background: white;
-    /*text-align: center;*/
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
-    /*margin: 3em;*/
     border-collapse:collapse;
-    /*border: 0.25px dotted;*/
 }
 
-div.N { border-top: 10px solid;}
-div.E { border-right: 5px solid;}
-div.S { border-bottom: 5px solid;}
-div.W { border-left: 5px solid;}
-
-
+div.N { border-top: 5px solid; }
+div.E { border-right: 5px solid; }
+div.S { border-bottom: 5px solid; }
+div.W { border-left: 5px solid; }
