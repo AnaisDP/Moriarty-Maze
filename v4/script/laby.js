@@ -81,7 +81,7 @@ function new_game(x,y,rep) {
 	print_maze(laby);	
 	//timer de 3s , qui ouvre une fenêtre "lose"
 	
-	setTimeout(function(){ lose(); },60000);
+	setTimeout(function(){ lose(); },3000);
 
 }
 // Initialisation du labyrinthe
@@ -155,14 +155,15 @@ function show_modal(id,title){
 		  '<div class="modal-dialog">'+
 			'<div class="modal-content">'+
 			  '<div class="modal-header">'+
-				'<a type="button" class="close" hrf="home.html" data-dismiss="modal">&times;</a>'+
+				'<a type="button" class="close" href="home.html" data-dismiss="modal">&times;</a>'+
 				'<h4 class="modal-title">'+title+'</h4>'+
 			  '</div>'+
 			  '<div class="modal-body">'+
 			  '</div>'+
 			  '<div class="modal-footer">'+
-		'<button type="button" id="same" class="btn btn-info" data-dismiss="modal">rejouer ce labyrinthe</button>'+
-				'<button type="button" id="next" class="btn btn-info" data-dismiss="modal">Nouveau labyrinthe</button>'+
+		        '<button type="button" id="same" class="btn btn-info" data-dismiss="modal">rejouer ce labyrinthe</button>'+
+				'<a type="button" class="btn btn-info" href="home.html" data-dismiss="modal">back home</a>'
+				//'<button type="button" id="next" class="btn btn-info" data-dismiss="modal">Nouveau labyrinthe</button>'+
 			  '</div>'+
             
 
