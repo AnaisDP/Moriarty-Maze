@@ -15,7 +15,26 @@ var entry_pos = [];		// entrée du labyrinthe
 var exit_pos = [];		// sortie du labyrinthe
 var user_pos = [];		// position du joueur
 var game_over = true;	//variable de gestion de la fin du jeu
-
+     //compteur
+function decompte()
+		{
+        if(compte <= 1) {
+        pluriel = "";
+        } else {
+        pluriel = "s";
+        }
+ 
+   		document.getElementById("compt").innerHTML = compte + " seconde" + pluriel;
+ 
+        if(compte == 0 || compte < 0) {
+        compte = 0;
+ 
+        clearInterval(timer);
+        }
+ 
+    	compte--;
+		}
+		var timer = setInterval('decompte()',1000);
 
 // Affichage du labyrinthe et de ses murs, et du joueur
 function print_maze(a) {
@@ -81,12 +100,13 @@ function new_game(x,y,rep) {
 	print_maze(laby);	
 	//timer de 3s , qui ouvre une fenêtre "lose"
 	
-	setTimeout(function(){ lose(); },3000);
+	setTimeout(function(){ lose(); },15000);
 
 }
 // Initialisation du labyrinthe
 function main(){
 	// Récupération des variables saisies par l'utilisateur
+    var compte = 15;   
 	var x = parseInt(document.querySelector('#x').value);
 	var y = parseInt(document.querySelector('#y').value);
 	// Enlever le footer pour avoir une zone de jeu plus grande :
@@ -162,8 +182,8 @@ function show_modal(id,title){
 			  '</div>'+
 			  '<div class="modal-footer">'+
 		        '<button type="button" id="same" class="btn btn-info" data-dismiss="modal">rejouer ce labyrinthe</button>'+
-				'<a type="button" class="btn btn-info" href="home.html" data-dismiss="modal">back home</a>'
-				//'<button type="button" id="next" class="btn btn-info" data-dismiss="modal">Nouveau labyrinthe</button>'+
+				//'<a type="button" class="btn btn-info" href="home.html" data-dismiss="modal">back home</a>'+
+				'<button type="button" id="next" class="btn btn-info" data-dismiss="modal">Nouveau labyrinthe</button>'+
 			  '</div>'+
             
 
@@ -177,7 +197,8 @@ function show_modal(id,title){
 	// cablage des évenements pour redémarrer la partie ou en démarrer une nouvelle :
 	$('#next').on('click',main);
 	$('#same').on('click',replay);
-}
+	$('#close').on('click',out);
+}   
 
 // Gestion de la victoire
 function win(){
@@ -190,3 +211,6 @@ function lose(){
       
 }
 
+function out(){
+ href="home.html" 
+}

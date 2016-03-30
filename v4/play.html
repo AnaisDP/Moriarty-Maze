@@ -20,28 +20,7 @@
 	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 	
 	<!-- essai décompte -->
-	<script language="javascript" type="text/javascript">
-		var compte = 60;
-		function decompte()
-		{
-        if(compte <= 1) {
-        pluriel = "";
-        } else {
-        pluriel = "s";
-        }
- 
-   		document.getElementById("compt").innerHTML = compte + " seconde" + pluriel;
- 
-        if(compte == 0 || compte < 0) {
-        compte = 0;
- 
-        clearInterval(timer);
-        }
- 
-    	compte--;
-		}
-		var timer = setInterval('decompte()',1000);
-	</script>
+	
 </head>
 <body onkeydown="uniKeyCode(event)" onload="décompte();">
 	<nav>
@@ -56,8 +35,8 @@
 				<div id="board" style="align:left;">
 					<p>
 						<span id="name1">Player 1</span> | 
-						<span id="timer1">Score</span> | 
-						<span id="score1">Timer</span>
+						<span id="timer1">Timer</span> | 
+						<span id="score1">Score</span>
 						<span id="compt"></span>
 					</p>
 					<!--p>Time | Player 2 | Score</p-->
@@ -69,6 +48,7 @@
 				<h1>Enter player name :</h1>
 				<input type="text" id="p_name" value="Player 1">
 				<button id="name" type="button" class="btn btn-info" data-toggle="modal" data-target="#modal_init">OK</button>
+
 			</div>
 		</div>	
 	</div>
