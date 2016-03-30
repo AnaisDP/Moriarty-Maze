@@ -66,7 +66,6 @@ function print_maze(a) {
 // Lancement d'une partie
 function new_game(x,y,rep) {
 	
-
 	if (rep){
 		laby = new_2d_array(x, y);
 		init_2d_array(laby, 15);
@@ -83,8 +82,9 @@ function new_game(x,y,rep) {
 }
 // Initialisation du labyrinthe
 function main(){
-
 	
+    duree = 130;
+	t ();
 	
 	// Récupération des variables saisies par l'utilisateur
 	var x = parseInt(document.querySelector('#x').value);
@@ -94,8 +94,7 @@ function main(){
 	// Lancement du jeu
 	new_game(x,y,game_over);	
 	game_over = false;
-	duree = 130;
-	t();
+
 	
 }
 
