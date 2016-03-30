@@ -15,27 +15,7 @@ var entry_pos = [];		// entrée du labyrinthe
 var exit_pos = [];		// sortie du labyrinthe
 var user_pos = [];		// position du joueur
 var game_over = true;	//variable de gestion de la fin du jeu
-     //compteur
-function decompte()
-		{
-        if(compte <= 1) {
-        pluriel = "";
-        } else {
-        pluriel = "s";
-        }
- 
-   		document.getElementById("compt").innerHTML = compte + " seconde" + pluriel;
- 
-        if(compte == 0 || compte < 0) {
-        compte = 0;
- 
-        clearInterval(timer);
-        }
- 
-    	compte--;
-		}
-		var timer = setInterval('decompte()',1000);
-
+    
 // Affichage du labyrinthe et de ses murs, et du joueur
 function print_maze(a) {
 	
@@ -88,6 +68,7 @@ function print_maze(a) {
 
 // Lancement d'une partie
 function new_game(x,y,rep) {
+	
 	if (rep){
 		laby = new_2d_array(x, y);
 		init_2d_array(laby, 15);
@@ -99,14 +80,16 @@ function new_game(x,y,rep) {
 	user_pos[1] = entry_pos[1];
 	print_maze(laby);	
 	//timer de 3s , qui ouvre une fenêtre "lose"
-	
-	setTimeout(function(){ lose(); },15000);
+
 
 }
 // Initialisation du labyrinthe
 function main(){
+
+	
+	t();
+	 decompte = 130;
 	// Récupération des variables saisies par l'utilisateur
-    var compte = 15;   
 	var x = parseInt(document.querySelector('#x').value);
 	var y = parseInt(document.querySelector('#y').value);
 	// Enlever le footer pour avoir une zone de jeu plus grande :
@@ -114,12 +97,17 @@ function main(){
 	// Lancement du jeu
 	new_game(x,y,game_over);	
 	game_over = false;
+	duree = 130;
+	t();
+	
 }
 
 // Ajout de la possibilité de rejouer la partie en cours (reset), qui repositionne le joueur sur la position d'entrée du même laby et réinitialise le compte à rebours
 function replay(){
 	game_over = false;
 	main();
+	duree = 130;
+	t();
 }
 
 /*
@@ -196,7 +184,9 @@ function show_modal(id,title){
 	$('#'+id).modal();
 	// cablage des évenements pour redémarrer la partie ou en démarrer une nouvelle :
 	$('#next').on('click',main);
+	
 	$('#same').on('click',replay);
+	
 	$('#close').on('click',out);
 }   
 
@@ -212,5 +202,5 @@ function lose(){
 }
 
 function out(){
- href="home.html" 
+ src: href="home.html" 
 }

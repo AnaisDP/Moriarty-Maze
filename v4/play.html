@@ -41,6 +41,55 @@
 					</p>
 					<!--p>Time | Player 2 | Score</p-->
 				</div>
+		<div id="compteur">
+			<div id="haut compt">
+			<p id="compteur">
+						</p>
+						<script>
+function t()
+{
+    var compteur=document.getElementById('compteur');
+    s=duree;
+    m=0;
+    h=0;
+    if(s<0)
+    {
+        lose();
+    }
+    else
+     {
+        if(s>59)
+         {
+            m=Math.floor(s/60);
+            s=s-m*60
+         }
+        if(m>59)
+         {
+            h=Math.floor(m/60);
+            m=m-h*60
+         }
+         if(s<10)
+         {
+            s="0"+s
+         }
+         if(m<10)
+         {
+            m="0"+m
+         }
+            compteur.innerHTML=h+"&nbsp;:&nbsp;"+m+"&nbsp:&nbsp;"+s
+     }
+duree=duree-1;
+window.setTimeout("t();",130);
+}
+</script>
+
+<script type="text/javascript">
+	duree = 800; //durée en seconde
+	t();
+</script>
+						
+
+	</div>
 			</aside>
 		</div>
 		<div id="maze">

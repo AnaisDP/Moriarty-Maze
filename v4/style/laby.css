@@ -6,7 +6,7 @@ body {
 }
 .content{
 	background-color: #ddd;
-	position: fixed;
+	position: scroll;
 	top: 100px;
 	width: 100%;
 	text-align: center;
@@ -127,3 +127,28 @@ div.E { border-right: 5px solid; }
 div.S { border-bottom: 5px solid; }
 div.W { border-left: 5px solid; }
 
+#compteur
+{
+	background-color: rgb(24,24,24);
+	border-radius: 2px;
+	border : 0px solid black;
+	font-family: 'Police_compteur';
+	text-shadow: black;
+	width: 300px;
+	height:  70px;
+	font-size: 50px;
+	position: relative; /*Position relative à ca position normal*/
+	top : 0px;
+	margin: auto;
+}
+@font-face {
+	font-family: 'Police_Compteur';
+	src : url(police/ice_pixel-7.ttf) format('truetype');
+}
+#haut_cont
+{
+	height: 60px; /*hauteur*/
+	border-bottom: 5px solid red;
+	width: 850px; /*Largeur*/
+	text-align: center;
+}
