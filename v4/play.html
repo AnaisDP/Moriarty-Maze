@@ -1,14 +1,5 @@
 <!--
-	(c) Platypus SAS 2015-2016
-	Release version - v2
-	Author - Jules & Franck Lepoivre
-	Release date - 2016/03/04 - TP 2 ESILV 2A ACS - Labyrinthes
-	
-	
-	1) Intégrer le code fourni à l’IHM maquettée
-		­ D’abord générer le code HTML du labyrinthe  : adapter la fonction print_maze pour qu’elle produise votre code HTML / CSS de maquette. 
-		­ Ajouter une fonction de callback pour que le bouton nouvelle partie, dans la nav_bar déplace l’utilisateur vers la page PLAY et déclenche la génération d’un nouveau labyrinthe. 
-		==> Suivant les contraintes du modèle MVC, on scinde le code de génération du labyrinthe (dans laby_model.js) et celui de l'affichage et de l'interaction utilisateur (laby.js).
+ESILV Moriarty
 -->
 <html>
 <head>
@@ -22,7 +13,7 @@
 	<!-- essai décompte -->
 	
 </head>
-<body onkeydown="uniKeyCode(event)" onload="décompte();">
+<body onkeydown="uniKeyCode(event)" >
 	<nav>
 		<a  href="home.html">Moriarty</a> 
 		<a class="cur" href="play.html">FUN</a> 
@@ -57,37 +48,36 @@ function t()
         lose();
     }
     else
-     {
+    {
         if(s>59)
-         {
+        {
             m=Math.floor(s/60);
-            s=s-m*60
-         }
+            s=s-m*60;
+        }
+
         if(m>59)
-         {
+        {
             h=Math.floor(m/60);
-            m=m-h*60
-         }
+            m=m-h*60;
+        }
+
          if(s<10)
          {
-            s="0"+s
+            s="0"+s;
          }
+
          if(m<10)
          {
-            m="0"+m
+            m="0"+m;
          }
-            compteur.innerHTML=h+"&nbsp;:&nbsp;"+m+"&nbsp:&nbsp;"+s
-     }
-duree=duree-1;
-window.setTimeout("t();",130);
+            compteur.innerHTML=h+"&nbsp;:&nbsp;"+m+"&nbsp:&nbsp;"+s;
+            duree=duree-1;
+			window.setTimeout("t();",130);
+	}
 }
+	
 </script>
-
-<script type="text/javascript">
-	duree = 800; //durée en seconde
-	t();
-</script>
-						
+		
 
 	</div>
 			</aside>
@@ -134,6 +124,7 @@ window.setTimeout("t();",130);
 			//on relie le bouton de lancement à la fonction de démarrage du jeu
 			$(function(){ 
 				$("#launch").on('click', main);
+
 			})
 		</script>
 		

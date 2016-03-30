@@ -1,8 +1,5 @@
 /*
-	(c) Platypus SAS 2015-2016
-	Release version - v2
-	Author - Jules & Franck Lepoivre
-	Release date - 2016/03/04 - TP 2 ESILV 2A ACS - Labyrinthes
+ESILV moriarty
 */
 
 
@@ -69,6 +66,7 @@ function print_maze(a) {
 // Lancement d'une partie
 function new_game(x,y,rep) {
 	
+
 	if (rep){
 		laby = new_2d_array(x, y);
 		init_2d_array(laby, 15);
@@ -87,8 +85,7 @@ function new_game(x,y,rep) {
 function main(){
 
 	
-	t();
-	 decompte = 130;
+	
 	// Récupération des variables saisies par l'utilisateur
 	var x = parseInt(document.querySelector('#x').value);
 	var y = parseInt(document.querySelector('#y').value);
@@ -106,8 +103,7 @@ function main(){
 function replay(){
 	game_over = false;
 	main();
-	duree = 130;
-	t();
+	
 }
 
 /*
