@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<% include ../partials/head %>
+            <title>Admin</title>
+	</head>
+    <body>
+        <% include ../partials/header %>
+        <div class="container">
+            <% include ../partials/msg %>
+            <ul id="list"></ul>
+        </div>
+        <script>
+            $.ajax({
+                url: "/users"
+            }).done(function(data) {
+                console.log(data);
+                for (i in data){
+                $('#list').append('<li>'+data[i].username+' '+data[i].email+'</li>');
+                }
+            }).fail(function(req,text_status,err){
+                console.log(text_status);
+                 $('#list').append('<li>Unregistered</li>');
+            });
+        </script>
+        <footer><% include ../partials/footer %></footer>
+    </body>
+</html>

@@ -1,0 +1,46 @@
+<!--
+	(c) Platypus SAS 2015-2016
+	Release version - v2
+	Author - Jules & Franck Lepoivre
+	Release date - 2016/03/21 - TP 2 ESILV 2A ACS - Labyrinthes
+-->
+<html>
+<head>
+    <% include ../partials/head %>
+    <title>Play</title>
+</head>
+<body onkeydown="uniKeyCode(event)">
+	<% include ../partials/header %>
+    <% include ../partials/msg %>
+	<div class="content">
+		<!--  gestion du chrono et des scores -->
+		<div style="visibility:hidden;" id="aside">
+			<aside>
+				<div id="board" style="align:left;">
+					<p>
+						<span id="name1">Player 1</span> | 
+						<span id="timer1">Time</span> | 
+						<span id="score1">Score</span>
+					</p>
+					<!--p>Time | Player 2 | Score</p-->
+				</div>
+			</aside>
+		</div>
+		<div id="maze">
+			<!--/*<div id="player_name">
+				<h1>Enter player name :</h1>
+				<input type="text" id="p_name" value="Player 1">
+				<button id="name" type="button" class="btn btn-info" data-toggle="modal" data-target="#modal_init">OK</button>
+			</div>*/-->
+		</div>
+	</div>
+    <footer><% include ../partials/footer %></footer>
+    <script>
+        //on relie le bouton de lancement à la fonction de démarrage du jeu
+        $(function(){ 
+            //$('#modal_init').modal();
+            //$("#launch").on('click', main);
+            main();
+        })
+    </script>
+</body>

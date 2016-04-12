@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<% include ../partials/head %>
+            <title>Room</title>
+	</head>
+    <body>
+        <% include ../partials/header %>
+        <% include ../partials/msg %>
+        
+        <div class="container">
+            <!--if (user)-->
+            <hr/>
+            <p> You are currently logged in as <%= user.username %></p>
+            <p><a href="/logout">Log out</a></p>
+            <p><a href="/play"> Start new game </a></p>
+            <!--if (game)-->
+            <p><a href="/load">Continue last game</a></p>
+        </div> <!-- /container -->
+        
+        <footer><% include ../partials/footer %></footer>
+    </body>
+</html>

@@ -1,0 +1,185 @@
+
+body {
+	background-color: #333;
+	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+	padding-top: 40px;
+	padding-bottom: 40px;
+}
+.content{
+	background-color: #ddd;
+	position: fixed;
+	top: 100px;
+	width: 100%;
+	text-align: center;
+	height: 100%;
+	border-top: 2px solid #fff;
+}
+.container{
+	background-color: #ddd;
+	color:#333;
+	position: fixed;
+	top: 100px;
+	width: 100%;
+	text-align: center;
+	height: 100%;
+	border-top: 2px solid #fff;
+}
+
+a {
+	color: #00B7FF;
+}
+
+.index{
+  max-width: 630px;
+  padding: 15px;
+  margin: 0 auto;  
+  text-align: left;
+}
+.index h1{
+    text-align: center;
+}
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+  margin-bottom: 10px;
+}
+.form-signin .checkbox {
+  font-weight: normal;
+}
+.form-signin .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+nav {
+    position: fixed;
+    top: 0;
+	height: 100px;
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	color: #ddd;
+	background-image: url("/images/motif.png");
+}
+nav a{
+	color: #a2b43a;
+	text-decoration:none;
+	background-color : #333;
+	border: 1px solid #ccc;
+	padding: 8px;
+	border-radius: 10px;
+	margin-top: 10px;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+.cur{
+	font-weight: bold;
+	color: #ddd;
+	border: 2px solid #ccc;
+}
+.scores{
+	max-width:960px !important;
+	margin-left:auto;
+	margin-right:auto;
+    background-color: #fff;
+}
+
+aside{
+	color: #a2b43a;
+	padding-left: 10px;
+}
+footer {
+    position: fixed;
+    bottom: 0;
+	width:100%;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	background-image: url("/images/motif.png");
+	border-top: 2px solid #fff;
+	color: #ddd;
+}
+footer a{ 
+	color: #a2b43a;
+	text-decoration:none;
+}
+footer img{
+	margin-top: 10px;
+}
+.modal-header, h4, .close {
+      background-color: #a2b43a;
+      color:white !important;
+      text-align: center;
+      font-size: 30px;
+}
+.xs{
+	width: 40px;
+}
+  
+div.maze {
+    position: relative;
+    top: 50px;
+    left: 150px;
+    width: 300px;
+    height: 300px;
+    /*border: dotted;
+    border-color: brown;
+    border-collapse:collapse;
+    border-width: thin;*/
+}
+
+#board {
+    position: fixed;
+    top:20px;
+}
+
+#user {
+    position: absolute;    
+    background: url(/images/character.png);
+	background-repeat :no-repeat;
+	background-position:center;
+}
+
+div.cell_intersect {
+    position: absolute;
+    background:#333;
+    border-radius:50%;    
+    width:10px;
+    height:10px;
+}
+
+div.cell {
+    position: absolute;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border-collapse:collapse;
+}
+
+div.N { border-top: 5px solid; }
+div.E { border-right: 5px solid; }
+div.S { border-bottom: 5px solid; }
+div.W { border-left: 5px solid; }

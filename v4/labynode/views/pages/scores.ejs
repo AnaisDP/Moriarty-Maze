@@ -1,0 +1,112 @@
+<!--
+	(c) Platypus SAS 2015-2016
+	Release version - v2
+	Author - Franck Lepoivre
+	Release date - 2016/02/07 - TP 2 ESILV 2A ACS - Labyrinthes
+-->
+<html>
+<head>
+	<% include ../partials/head %>
+        <title>Scores</title>
+</head>
+<body>
+	<% include ../partials/header %>
+    <% include ../partials/msg %>
+	<div class="content table-responsive" id="scoreboard">
+		<h1>High scores</h1>
+        <button id="refresh" class="btn btn-success" type="button">Refresh</button>
+		<table id="scores" class="scores table table-bordered">
+			<thead>
+                <tr id="theader">
+                    <th>Player</th>
+                    <th>Score</th> 
+                    <th>Dimensions</th>
+                    <th>Moves</th>
+                    <th>Bumps</th>
+                    <th>Time</th>
+                    <th>Time left</th>
+                    <th>Monsters</th>
+                    <th>Monsters Behavior</th>
+                    <th>Bonus</th>
+                    <th>Malus</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+		</table>
+	</div>
+	<footer>
+	 <% include ../partials/footer %>
+	</footer>
+    <script>
+        /*
+        . Extension C/S de la gestion des scores - Fonctionnalités à concevoir et réaliser
+	       1) Authentification et connexion.
+            2) Visualisation des scores actuels de tous les joueurs en cours sur le côté de la fenêtre + actuellement connectés.
+            3) Page scores : tous les scores de tous les joueurs pour toutes les parties
+                a) Scores toutes parties confondues
+                b) Sélectionner une partie donnée
+                c) Voir les détails analytiques du score d’un joueur, globalement et en croisant avec une partie
+            4) Objet JSON qui correspond au joueur:
+                a) Le joueur
+                b) Score global
+                c) Score associé à des parties défi (plusieurs maps / serveurs / parties)
+                d) Les parties en cours => rendre visible aux autres joueurs, la façon dont un bon joueur a construit son score
+                    i) La position actuelle
+                    ii) Le nombre de mouvements
+                    iii) Le nombre de murs pris (bump)
+                    iv) Le temps écoulé et le temps restant
+        */
+        
+		$(function(){ 
+            
+			var refresh = function (){
+                $('#scores tbody').empty();
+                $.ajax({
+                    url: "/scores_list"
+                }).done(function(data) {
+                    console.log('a',data);
+                    if (data.length > 0){
+                        console.log(data);
+                        $('#theader').append('<th>Game</th><th></th>');
+                        var flow = '';
+                        for (i in data){
+                            flow+='<tr>';
+                            for (j in data[i]) flow+='<td>'+data[i][j]+'</td>';
+                            flow+='<td><button id="class="btn-xs btn-success">+</button></td></tr>';
+                        };
+                        $('#scores tbody').append(flow);
+                    } else local_scores();
+                 }).fail(function(req,text_status,err){
+                    local_scores(text_status);
+                });     
+            };
+            
+            function local_scores(text_status){
+                //console.log(text_status);
+                // MODE LOCAL
+                if ((localStorage.labyscores != null)&&(localStorage.labyscores.length != 0)){
+                        var labyscores = JSON.parse(localStorage.labyscores);	
+                        labyscores.sort(function(a, b) {return parseInt(a.score) - parseInt(b.score);});
+                        labyscores.reverse();
+                        var flow ='';
+                        for ( var i = 0; i < labyscores.length; i++) {
+                            if (Object.keys(labyscores[i]).length == 0) continue;
+                            flow+='<tr>';
+                            for (j in labyscores[i]){ 
+                                flow+='<td>'+ labyscores[i][j]+'</td>';
+                            }
+                            flow+='</tr>';
+                        }
+                        $('#scores tbody').append(flow);
+                        $('#scoreboard').append('<h3>Local scores</h3>')
+                } else $('#scoreboard').append('<h3>No recorded scores.</h3>');
+            }
+            $('#refresh').on('click',refresh);
+            refresh();
+		});
+        
+        
+	</script>
+</body>
+</html>
